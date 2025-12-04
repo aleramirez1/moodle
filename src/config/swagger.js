@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Moodle - Sistema de Gestión Academica',
+      title: 'API Moodle - Sistema de Gestión Académica',
       version: '1.0.0',
       description: 'API REST para gestionar alumnos, docentes, asignaturas, grupos y programas de estudio',
       contact: {
@@ -23,7 +23,9 @@ const options = {
       { name: 'Grupos', description: 'Gestión de grupos' },
       { name: 'Docentes', description: 'Gestión de docentes' },
       { name: 'Asignaturas', description: 'Gestión de asignaturas' },
-      { name: 'Programas de Estudio', description: 'Gestión de programas de estudio' }
+      { name: 'Programas de Estudio', description: 'Gestión de programas de estudio' },
+      { name: 'Inscripciones', description: 'Inscripción de alumnos a asignaturas' },
+      { name: 'Asignaciones Docentes', description: 'Asignación de docentes a asignaturas' }
     ],
     components: {
       schemas: {

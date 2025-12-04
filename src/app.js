@@ -15,10 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Swagger documentation
+// swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-//rutas
+// routes
 app.get('/', (req, res) => {
   res.json({ 
     message: 'API Moodle - Sistema de Gestión Académica',
@@ -35,7 +35,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', routes);
-
 
 app.use(errorHandler);
 
