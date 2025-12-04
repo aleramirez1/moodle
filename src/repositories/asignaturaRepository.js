@@ -11,18 +11,18 @@ class AsignaturaRepository {
     return rows[0];
   }
 
-  async create(nombre, cuatrimestre) {
+  async create(nombre, cuatrimestre, abreviacion) {
     const [result] = await pool.query(
-      'INSERT INTO asignaturas (nombre, cuatrimestre) VALUES (?, ?)',
-      [nombre, cuatrimestre]
+      'INSERT INTO asignaturas (nombre, cuatrimestre, abreviacion) VALUES (?, ?, ?)',
+      [nombre, cuatrimestre, arguments[2]]
     );
     return result.insertId;
   }
 
-  async update(id, nombre, cuatrimestre) {
+  async update(id, nombre, cuatrimestre, abreviacion) {
     const [result] = await pool.query(
-      'UPDATE asignaturas SET nombre = ?, cuatrimestre = ? WHERE id = ?',
-      [nombre, cuatrimestre, id]
+      'UPDATE asignaturas SET nombre = ?, cuatrimestre = ?, abreviacion = ? WHERE id = ?',
+      [nombre, cuatrimestre, abreviacion, id]
     );
     return result.affectedRows;
   }

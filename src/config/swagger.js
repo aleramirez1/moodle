@@ -82,6 +82,7 @@ const options = {
           properties: {
             id: { type: 'integer', example: 1 },
             nombre: { type: 'string', example: 'Matemáticas' },
+            abreviacion: { type: 'string', example: 'MAT' },
             cuatrimestre: { type: 'integer', example: 1 },
             created_at: { type: 'string', format: 'date-time' },
             updated_at: { type: 'string', format: 'date-time' }
@@ -92,6 +93,7 @@ const options = {
           required: ['nombre', 'cuatrimestre'],
           properties: {
             nombre: { type: 'string', example: 'Matemáticas' },
+            abreviacion: { type: 'string', example: 'MAT' },
             cuatrimestre: { type: 'integer', example: 1, minimum: 1 }
           }
         },

@@ -21,8 +21,8 @@ class AsignaturaController {
 
   async create(req, res, next) {
     try {
-      const { nombre, cuatrimestre } = req.body;
-      const asignatura = await asignaturaService.createAsignatura(nombre, cuatrimestre);
+      const { nombre, cuatrimestre, abreviacion } = req.body;
+      const asignatura = await asignaturaService.createAsignatura(nombre, cuatrimestre, abreviacion);
       res.status(201).json({ success: true, data: asignatura });
     } catch (error) {
       next(error);
@@ -31,8 +31,8 @@ class AsignaturaController {
 
   async update(req, res, next) {
     try {
-      const { nombre, cuatrimestre } = req.body;
-      const asignatura = await asignaturaService.updateAsignatura(req.params.id, nombre, cuatrimestre);
+      const { nombre, cuatrimestre, abreviacion } = req.body;
+      const asignatura = await asignaturaService.updateAsignatura(req.params.id, nombre, cuatrimestre, abreviacion);
       res.json({ success: true, data: asignatura });
     } catch (error) {
       next(error);
