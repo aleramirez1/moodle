@@ -206,4 +206,82 @@ router.get('/docentes/:docenteId', inscripcionController.getAsignacionesByDocent
  */
 router.get('/asignaturas/:asignaturaId/grupos/:grupoId/docentes', inscripcionController.getDocentesByAsignaturaGrupo.bind(inscripcionController));
 
+/**
+ * @swagger
+ * /api/inscripciones/alumnos/{id}:
+ *   put:
+ *     summary: Actualizar inscripción de un alumno a otra asignatura o grupo
+ *     tags: [Inscripciones]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la inscripción
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - asignaturaId
+ *               - grupoId
+ *             properties:
+ *               asignaturaId:
+ *                 type: integer
+ *                 example: 1
+ *               grupoId:
+ *                 type: integer
+ *                 example: 1
+ *     responses:
+ *       200:
+ *         description: Inscripción actualizada exitosamente
+ *       400:
+ *         description: Datos inválidos o alumno ya inscrito en el nuevo grupo
+ *       404:
+ *         description: Inscripción, asignatura o grupo no encontrado
+ */
+router.put('/alumnos/:id', inscripcionController.actualizarInscripcionAlumno.bind(inscripcionController));
+
+/**
+ * @swagger
+ * /api/inscripciones/docentes/{id}:
+ *   put:
+ *     summary: Actualizar asignación de un docente a otra asignatura o grupo
+ *     tags: [Asignaciones Docentes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la asignación
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - asignaturaId
+ *               - grupoId
+ *             properties:
+ *               asignaturaId:
+ *                 type: integer
+ *                 example: 1
+ *               grupoId:
+ *                 type: integer
+ *                 example: 1
+ *     responses:
+ *       200:
+ *         description: Asignación actualizada exitosamente
+ *       400:
+ *         description: Datos inválidos o docente ya asignado al nuevo grupo
+ *       404:
+ *         description: Asignación, asignatura o grupo no encontrado
+ */
+router.put('/docentes/:id', inscripcionController.actualizarAsignacionDocente.bind(inscripcionController));
+
 module.exports = router;

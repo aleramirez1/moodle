@@ -109,6 +109,42 @@ class InscripcionRepository {
     `, [asignaturaId, grupoId]);
     return rows;
   }
+
+  // Actualizar inscripción de alumno
+  async actualizarInscripcionAlumno(inscripcionId, asignaturaId, grupoId) {
+    const [result] = await pool.query(
+      'UPDATE alumno_asignatura SET asignatura_id = ?, grupo_id = ? WHERE id = ?',
+      [asignaturaId, grupoId, inscripcionId]
+    );
+    return result.affectedRows;
+  }
+
+  // Actualizar asignación de docente
+  async actualizarAsignacionDocente(asignacionId, asignaturaId, grupoId) {
+    const [result] = await pool.query(
+      'UPDATE docente_asignatura SET asignatura_id = ?, grupo_id = ? WHERE id = ?',
+      [asignaturaId, grupoId, asignacionId]
+    );
+    return result.affectedRows;
+  }
+
+  // Verificar si una inscripción existe
+  async verificarInscripcionPorId(inscripcionId) {
+    const [rows] = await pool.query(
+      'SELECT * FROM alumno_asignatura WHERE id = ?',
+      [inscripcionId]
+    );
+    return rows[0];
+  }
+
+  // Verificar si una asignación existe
+  async verificarAsignacionPorId(asignacionId) {
+    const [rows] = await pool.query(
+      'SELECT * FROM docente_asignatura WHERE id = ?',
+      [asignacionId]
+    );
+    return rows[0];
+  }
 }
 
 module.exports = new InscripcionRepository();

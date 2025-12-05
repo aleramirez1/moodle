@@ -84,6 +84,28 @@ class InscripcionController {
       next(error);
     }
   }
+
+  // Actualizar inscripción de alumno
+  async actualizarInscripcionAlumno(req, res, next) {
+    try {
+      const { asignaturaId, grupoId } = req.body;
+      const result = await inscripcionService.actualizarInscripcionAlumno(req.params.id, asignaturaId, grupoId);
+      res.json({ success: true, data: result });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Actualizar asignación de docente
+  async actualizarAsignacionDocente(req, res, next) {
+    try {
+      const { asignaturaId, grupoId } = req.body;
+      const result = await inscripcionService.actualizarAsignacionDocente(req.params.id, asignaturaId, grupoId);
+      res.json({ success: true, data: result });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new InscripcionController();

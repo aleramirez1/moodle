@@ -189,6 +189,122 @@ class InscripcionService {
 
     return await inscripcionRepository.getDocentesByAsignaturaGrupo(asignaturaId, grupoId);
   }
+
+  async actualizarInscripcionAlumno(inscripcionId, asignaturaId, grupoId) {
+    const inscripcion = await inscripcionRepository.verificarInscripcionPorId(inscripcionId);
+    if (!inscripcion) {
+      const error = new Error('Inscripción no encontrada');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const asignatura = await asignaturaRepository.findById(asignaturaId);
+    if (!asignatura) {
+      const error = new Error('Asignatura no encontrada');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const grupo = await grupoRepository.findById(grupoId);
+    if (!grupo) {
+      const error = new Error('Grupo no encontrado');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const inscripcionExistente = await inscripcionRepository.verificarInscripcion(
+      inscripcion.alumno_id,
+      asignaturaId,
+      grupoId
+    );
+
+    if (inscripcionExistente && inscripcionExistente.id !== inscripcionId) {
+      const error = new Error('El alumno ya está inscrito en esta asignatura y grupo');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const affectedRows = await inscripcionRepository.actualizarInscripcionAlumno(
+      inscripcionId,
+      asignaturaId,
+      grupoId
+    );
+
+    if (affectedRows === 0) {
+      const error = new Error('No se pudo actualizar la inscripción');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const inscripcionActualizada = await inscripcionRepository.verificarInscripcionPorId(inscripcionId);
+    const alumno = await alumnoRepository.findById(inscripcionActualizada.alumno_id);
+    
+    return {
+      id: inscripcionId,
+      alumno: alumno.nombre,
+      asignatura: asignatura.nombre,
+      grupo: grupo.nombre,
+      message: 'Inscripción actualizada exitosamente'
+    };
+  }
+
+  async actualizarAsignacionDocente(asignacionId, asignaturaId, grupoId) {
+    const asignacion = await inscripcionRepository.verificarAsignacionPorId(asignacionId);
+    if (!asignacion) {
+      const error = new Error('Asignación no encontrada');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const asignatura = await asignaturaRepository.findById(asignaturaId);
+    if (!asignatura) {
+      const error = new Error('Asignatura no encontrada');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const grupo = await grupoRepository.findById(grupoId);
+    if (!grupo) {
+      const error = new Error('Grupo no encontrado');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const asignacionExistente = await inscripcionRepository.verificarAsignacionDocente(
+      asignacion.docente_id,
+      asignaturaId,
+      grupoId
+    );
+
+    if (asignacionExistente && asignacionExistente.id !== asignacionId) {
+      const error = new Error('El docente ya está asignado a esta asignatura y grupo');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const affectedRows = await inscripcionRepository.actualizarAsignacionDocente(
+      asignacionId,
+      asignaturaId,
+      grupoId
+    );
+
+    if (affectedRows === 0) {
+      const error = new Error('No se pudo actualizar la asignación');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const asignacionActualizada = await inscripcionRepository.verificarAsignacionPorId(asignacionId);
+    const docente = await docenteRepository.findById(asignacionActualizada.docente_id);
+    
+    return {
+      id: asignacionId,
+      docente: docente.nombre,
+      asignatura: asignatura.nombre,
+      grupo: grupo.nombre,
+      message: 'Asignación actualizada exitosamente'
+    };
+  }
 }
 
 module.exports = new InscripcionService();
